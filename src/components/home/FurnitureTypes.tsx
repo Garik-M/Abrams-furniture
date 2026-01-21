@@ -37,42 +37,44 @@ const furnitureTypes = [
 
 export function FurnitureTypes() {
   return (
-    <section className="py-20">
-      <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">What We Build</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+    <section className="py-12 md:py-20">
+      <div className="container px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">What We Build</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base">
             Choose from our range of custom furniture options, all built to your
             exact specifications with transparent pricing.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {furnitureTypes.map((type) => (
             <Card
               key={type.id}
               className="group hover:border-primary/50 transition-colors"
             >
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 {/* Visual placeholder */}
-                <div className="aspect-video rounded-lg bg-secondary mb-6 flex items-center justify-center overflow-hidden h-[270px] w-[100%]">
+                <div className="aspect-video rounded-lg bg-secondary mb-4 md:mb-6 flex items-center justify-center overflow-hidden">
                   <img
                     src={type.img}
                     alt="furniture picture"
-                    className="mix-blend-darken"
+                    className="mix-blend-darken w-full h-full object-contain"
                   />
                 </div>
 
-                <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                <h3 className="text-lg md:text-xl font-semibold mb-2">
+                  {type.title}
+                </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   {type.description}
                 </p>
 
-                <p className="text-lg font-bold text-primary mb-4">
+                <p className="text-base md:text-lg font-bold text-primary mb-4">
                   Starting at {type.price}
                 </p>
 
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-4 md:mb-6">
                   {type.features.map((feature) => (
                     <li
                       key={feature}
