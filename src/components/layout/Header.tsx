@@ -22,9 +22,13 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="CustomCraft Logo" className="w-[40px] h-auto" />
+          <img
+            src={logo}
+            alt="Abram's Furniture Logo"
+            className="w-[40px] h-auto"
+          />
           <span className="hidden font-bold text-lg sm:inline-block">
-            CustomCraft
+            Abram's Furniture
           </span>
         </Link>
 

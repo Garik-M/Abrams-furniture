@@ -12,10 +12,10 @@ export function Footer() {
             <Link to="/" className="flex items-center gap-2">
               <img
                 src={logo}
-                alt="CustomCraft Logo"
+                alt="Abram's Furniture Logo"
                 className="h-auto w-[50px]"
               />
-              <span className="font-bold text-lg">CustomCraft</span>
+              <span className="font-bold text-lg">Abram's Furniture</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Custom Furniture Manufacturing
@@ -73,7 +73,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>orders@customcraft.com</span>
+                <span>orders@abramsfurniture.com</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
@@ -97,7 +97,8 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
             <p>
-              © {new Date().getFullYear()} CustomCraft. All rights reserved.
+              © {new Date().getFullYear()} Abram's Furniture. All rights
+              reserved.
             </p>
             <p>Custom Furniture Manufacturing | Built in the USA</p>
           </div>

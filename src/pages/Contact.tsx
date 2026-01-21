@@ -219,7 +219,7 @@ ${formData.message ? `Budget: ${formData.message}` : ""}`,
                   <div>
                     <p className="font-medium">Email</p>
                     <p className="text-sm text-muted-foreground">
-                      orders@customcraft.com
+                      orders@abramsfurniture.com
                     </p>
                   </div>
                 </div>
