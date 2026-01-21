@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
-import logo from "@/logo.png";
+import logo from "@/assets/images/logo.png";
 
 export function Footer() {
   return (
@@ -10,7 +10,11 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="CustomCraft Logo" className="h-auto w-[50px]" />
+              <img
+                src={logo}
+                alt="CustomCraft Logo"
+                className="h-auto w-[50px]"
+              />
               <span className="font-bold text-lg">CustomCraft</span>
             </Link>
             <p className="text-sm text-muted-foreground">

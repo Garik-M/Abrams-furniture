@@ -7,9 +7,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Calculator, Clock, Truck, Info } from "lucide-react";
-import baseCabinet from "../../archive.png";
-import topCabinet from "../../topCabinet.png";
-import wardrobeImg from "../../wardrobe.png";
+import baseCabinet from "@/assets/images/archive.png";
+import topCabinet from "@/assets/images/topCabinet.png";
+import wardrobeImg from "@/assets/images/wardrobe.png";
 
 type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe";
 type Material = "melamine" | "plywood";

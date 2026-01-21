@@ -2,18 +2,19 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import baseImg from "../../tg_image_1143212202.png";
-import topImg from "../../tg_image_818381764.png";
-import wardrobeImg from "../../tg_image_4113282786.png";
+import baseImg from "@/assets/images/tg_image_1143212202.png";
+import topImg from "@/assets/images/tg_image_818381764.png";
+import wardrobeImg from "@/assets/images/tg_image_4113282786.png";
 
 const furnitureTypes = [
   {
     id: "base-cabinet",
     title: "Base Cabinet",
-    description: "Kitchen and bathroom base cabinets with optional sliding drawers",
-    price: "$250/linear ft", 
+    description:
+      "Kitchen and bathroom base cabinets with optional sliding drawers",
+    price: "$250/linear ft",
     features: ["Counter support", "Drawer options", "Custom width"],
-    img: baseImg
+    img: baseImg,
   },
   {
     id: "top-cabinet",
@@ -21,15 +22,16 @@ const furnitureTypes = [
     description: "Wall-mounted upper cabinets for kitchens and storage",
     price: "$200/linear ft",
     features: ["Wall mounted", "Adjustable shelves", "Multiple heights"],
-    img: topImg
+    img: topImg,
   },
   {
     id: "wardrobe",
     title: "Wardrobe",
-    description: "Full-height wardrobes with customizable internal organization",
+    description:
+      "Full-height wardrobes with customizable internal organization",
     price: "$200/linear ft",
     features: ["3-9 ft heights", "Custom internals", "Sliding or hinged"],
-    img: wardrobeImg
+    img: wardrobeImg,
   },
 ];
 
@@ -47,11 +49,18 @@ export function FurnitureTypes() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {furnitureTypes.map((type) => (
-            <Card key={type.id} className="group hover:border-primary/50 transition-colors">
+            <Card
+              key={type.id}
+              className="group hover:border-primary/50 transition-colors"
+            >
               <CardContent className="p-6">
                 {/* Visual placeholder */}
                 <div className="aspect-video rounded-lg bg-secondary mb-6 flex items-center justify-center overflow-hidden h-[270px] w-[100%]">
-                  <img src={type.img} alt="furniture picture" className="mix-blend-darken"/>
+                  <img
+                    src={type.img}
+                    alt="furniture picture"
+                    className="mix-blend-darken"
+                  />
                 </div>
 
                 <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
@@ -65,14 +74,21 @@ export function FurnitureTypes() {
 
                 <ul className="space-y-2 mb-6">
                   {type.features.map((feature) => (
-                    <li key={feature} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <li
+                      key={feature}
+                      className="text-sm text-muted-foreground flex items-center gap-2"
+                    >
                       <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                       {feature}
                     </li>
                   ))}
                 </ul>
 
-                <Button asChild variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                >
                   <Link to={`/calculator?type=${type.id}`}>
                     Configure & Price
                     <ArrowRight className="ml-2 h-4 w-4" />
