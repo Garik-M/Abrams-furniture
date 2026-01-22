@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calculator, CheckCircle2 } from "lucide-react";
-import heroBackground from "@/assets/images/2026-01-22 17.19.54.jpg";
+import heroBackground from "@/assets/images/hero-bg.webp";
 
 export function HeroSection() {
   return (
