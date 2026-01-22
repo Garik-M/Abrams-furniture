@@ -30,7 +30,7 @@ const furnitureTypes = [
     description:
       "Full-height wardrobes with customizable internal organization",
     price: "$200/linear ft",
-    features: ["3-9 ft heights", "Custom internals", "Sliding or hinged"],
+    features: ["4-9 ft heights", "Custom internals", "Sliding or hinged"],
     img: wardrobeImg,
   },
 ];

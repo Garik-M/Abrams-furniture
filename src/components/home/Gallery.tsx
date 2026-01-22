@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import img1 from "@/assets/images/20220323_231726.jpg";
-import img2 from "@/assets/images/20220401_154959.jpg";
-import img3 from "@/assets/images/20220401_155137.jpg";
-import img4 from "@/assets/images/20221201_004716.jpg";
-import img5 from "@/assets/images/20221201_005004.jpg";
-import img6 from "@/assets/images/20221201_005126.jpg";
-import img7 from "@/assets/images/IMG_0560.jpg";
-import img8 from "@/assets/images/received_318287899094124.jpeg";
+import img1 from "@/assets/images/20220323_231726.webp";
+import img2 from "@/assets/images/20220401_154959.webp";
+import img3 from "@/assets/images/20220401_155137.webp";
+import img4 from "@/assets/images/20221201_004716.webp";
+import img5 from "@/assets/images/20221201_005004.webp";
+import img6 from "@/assets/images/20221201_005126.webp";
+import img7 from "@/assets/images/IMG_0560.webp";
+import img8 from "@/assets/images/received_318287899094124.webp";
 
 const galleryImages = [
   {
