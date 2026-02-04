@@ -46,7 +46,11 @@ const Contact = () => {
           ? "Base Cabinet"
           : type === "top-cabinet"
             ? "Top Cabinet"
-            : "Wardrobe";
+            : type === "wardrobe"
+              ? "Wardrobe"
+              : type === "staircase-cabinet"
+                ? "Staircase Cabinet"
+                : "Unknown";
 
       setFormData((prev) => ({
         ...prev,
@@ -353,6 +357,9 @@ ${formData.message ? `Budget: ${formData.message}` : ""}`,
                             Top Cabinet
                           </SelectItem>
                           <SelectItem value="wardrobe">Wardrobe</SelectItem>
+                          <SelectItem value="staircase-cabinet">
+                            Staircase Cabinet
+                          </SelectItem>
                           <SelectItem value="multiple">
                             Multiple Items
                           </SelectItem>

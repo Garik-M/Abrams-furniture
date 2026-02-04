@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import baseImg from "@/assets/images/tg_image_1143212202.png";
 import topImg from "@/assets/images/tg_image_818381764.png";
 import wardrobeImg from "@/assets/images/tg_image_4113282786.png";
+import staircaseImg from "@/assets/images/staircase.webp";
 
 const furnitureTypes = [
   {
@@ -33,6 +34,14 @@ const furnitureTypes = [
     features: ["4-9 ft heights", "Custom internals", "Sliding or hinged"],
     img: wardrobeImg,
   },
+  {
+    id: "staircase-cabinet",
+    title: "Staircase Cabinet",
+    description: "Custom built-in cabinets designed for staircase areas",
+    price: "$700/linear ft",
+    features: ["3-12 ft lengths", "Custom fit", "Space optimization"],
+    img: staircaseImg,
+  },
 ];
 
 export function FurnitureTypes() {
@@ -47,7 +56,7 @@ export function FurnitureTypes() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
           {furnitureTypes.map((type) => (
             <Card
               key={type.id}

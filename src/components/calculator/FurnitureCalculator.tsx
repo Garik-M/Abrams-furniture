@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,7 @@ import baseCabinet from "@/assets/images/archive.png";
 import topCabinet from "@/assets/images/topCabinet.png";
 import wardrobeImg from "@/assets/images/wardrobe.png";
 
-type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe";
+type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet";
 type Material = "melamine" | "plywood";
 type WardrobeHeight = "6" | "9" | "custom";
 
@@ -28,10 +29,13 @@ const PRICES = {
   baseCabinetPerFoot: 250,
   topCabinetPerFoot: 200,
   wardrobePerFoot: 200,
+  staircaseCabinetPerFoot: 700,
   drawerCost: 80,
 };
 
 export function FurnitureCalculator() {
+  const [searchParams] = useSearchParams();
+
   const [state, setState] = useState<CalculatorState>({
     furnitureType: "base-cabinet",
     length: 10,
@@ -40,6 +44,19 @@ export function FurnitureCalculator() {
     wardrobeHeight: "6",
     customHeight: 8,
   });
+
+  // Pre-select furniture type from URL params
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type && ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet"].includes(type)) {
+      setState((prev) => ({
+        ...prev,
+        furnitureType: type as FurnitureType,
+        // Reset length to appropriate default for staircase cabinet
+        length: type === "staircase-cabinet" ? 3 : prev.length,
+      }));
+    }
+  }, [searchParams]);
 
   const calculation = useMemo(() => {
     let total = 0;
@@ -81,6 +98,14 @@ export function FurnitureCalculator() {
           `= $${total.toLocaleString()}`,
         ];
         break;
+
+      case "staircase-cabinet":
+        const staircaseCost = state.length * PRICES.staircaseCabinetPerFoot;
+        total = staircaseCost;
+        breakdown = [
+          `${state.length} ft × ${PRICES.staircaseCabinetPerFoot} = ${staircaseCost.toLocaleString()}`,
+        ];
+        break;
     }
 
     return { total, breakdown };
@@ -94,6 +119,8 @@ export function FurnitureCalculator() {
         return "Top Cabinet";
       case "wardrobe":
         return "Wardrobe";
+      case "staircase-cabinet":
+        return "Staircase Cabinet";
     }
   };
 
@@ -122,7 +149,7 @@ export function FurnitureCalculator() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-3"
             >
               {(
-                ["base-cabinet", "top-cabinet", "wardrobe"] as FurnitureType[]
+                ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet"] as FurnitureType[]
               ).map((type) => (
                 <div key={type} className="relative">
                   <RadioGroupItem
@@ -141,7 +168,11 @@ export function FurnitureCalculator() {
                       $
                       {type === "base-cabinet"
                         ? PRICES.baseCabinetPerFoot
-                        : PRICES.topCabinetPerFoot}
+                        : type === "top-cabinet"
+                          ? PRICES.topCabinetPerFoot
+                          : type === "wardrobe"
+                            ? PRICES.wardrobePerFoot
+                            : PRICES.staircaseCabinetPerFoot}
                       /ft
                     </span>
                     <img
@@ -172,13 +203,16 @@ export function FurnitureCalculator() {
               <Input
                 id="length"
                 type="number"
-                min={1}
-                max={100}
+                min={state.furnitureType === "staircase-cabinet" ? 3 : 1}
+                max={state.furnitureType === "staircase-cabinet" ? 12 : 100}
                 value={state.length}
                 onChange={(e) =>
                   setState((s) => ({
                     ...s,
-                    length: Math.max(1, parseInt(e.target.value) || 1),
+                    length: Math.max(
+                      state.furnitureType === "staircase-cabinet" ? 3 : 1,
+                      parseInt(e.target.value) || (state.furnitureType === "staircase-cabinet" ? 3 : 1)
+                    ),
                   }))
                 }
                 className="w-24 text-lg font-semibold"
@@ -295,7 +329,7 @@ export function FurnitureCalculator() {
                     <Input
                       type="number"
                       min={4}
-                      max={12}
+                      max={9}
                       value={state.customHeight}
                       onChange={(e) =>
                         setState((s) => ({
