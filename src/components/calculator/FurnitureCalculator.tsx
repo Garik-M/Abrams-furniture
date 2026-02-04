@@ -11,6 +11,7 @@ import { Calculator, Clock, Truck, Info } from "lucide-react";
 import baseCabinet from "@/assets/images/archive.png";
 import topCabinet from "@/assets/images/topCabinet.png";
 import wardrobeImg from "@/assets/images/wardrobe.png";
+import stairsImg from "@/assets/svg/stairs.svg";
 
 type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet";
 type Material = "melamine" | "plywood";
@@ -180,8 +181,10 @@ export function FurnitureCalculator() {
                         type === "base-cabinet"
                           ? baseCabinet
                           : type === "top-cabinet"
-                            ? topCabinet
-                            : wardrobeImg
+                            ? topCabinet 
+                            : type === "wardrobe" 
+                              ? wardrobeImg
+                              : stairsImg
                       }
                       alt="furniture"
                       className="w-10 absolute right-[20px] lg:hidden"
@@ -362,7 +365,9 @@ export function FurnitureCalculator() {
                   ? baseCabinet
                   : state.furnitureType === "top-cabinet"
                     ? topCabinet
-                    : wardrobeImg
+                    : state.furnitureType === "wardrobe"
+                      ? wardrobeImg
+                      : stairsImg
               }
               alt="furniture"
               className="w-20 absolute right-[30px] max-lg:hidden"
