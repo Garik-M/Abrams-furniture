@@ -6,6 +6,7 @@ import baseImg from "@/assets/images/tg_image_1143212202.png";
 import topImg from "@/assets/images/tg_image_818381764.png";
 import wardrobeImg from "@/assets/images/tg_image_4113282786.png";
 import staircaseImg from "@/assets/images/staircase.webp";
+import bedImg from "@/assets/images/bed.png";
 
 const furnitureTypes = [
   {
@@ -42,6 +43,14 @@ const furnitureTypes = [
     features: ["3-12 ft lengths", "Custom fit", "Space optimization"],
     img: staircaseImg,
   },
+  {
+    id: "platform-bed",
+    title: "Platform Bed",
+    description: "Custom platform beds with storage options and headboards",
+    price: "From $750",
+    features: ["Multiple sizes", "Storage drawers", "Custom headboard"],
+    img: bedImg, // You can replace with a bed image later
+  },
 ];
 
 export function FurnitureTypes() {
@@ -56,7 +65,7 @@ export function FurnitureTypes() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {furnitureTypes.map((type) => (
             <Card
               key={type.id}

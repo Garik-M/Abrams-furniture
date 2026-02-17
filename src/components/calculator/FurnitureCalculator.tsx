@@ -13,9 +13,10 @@ import topCabinet from "@/assets/images/topCabinet.png";
 import wardrobeImg from "@/assets/images/wardrobe.png";
 import stairsImg from "@/assets/svg/stairs.svg";
 
-type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet";
+type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet" | "platform-bed";
 type Material = "melamine" | "plywood";
 type WardrobeHeight = "6" | "9" | "custom";
+type BedSize = "twin" | "full" | "queen" | "king" | "calKing";
 
 interface CalculatorState {
   furnitureType: FurnitureType;
@@ -24,6 +25,13 @@ interface CalculatorState {
   drawers: number;
   wardrobeHeight: WardrobeHeight;
   customHeight: number;
+  bedSize: BedSize;
+  bedAddOns: {
+    shelves: boolean;
+    drawers: boolean;
+    headboard: boolean;
+    customHeight: boolean;
+  };
 }
 
 const PRICES = {
@@ -33,6 +41,53 @@ const PRICES = {
   staircaseCabinetPerFoot: 700,
   drawerCost: 80,
 };
+
+const BED_CONFIG = {
+  twin: {
+    label: "Twin",
+    dimensions: { height: 14, length: 42, width: 78 },
+    basePrice: 750,
+  },
+  full: {
+    label: "Full",
+    dimensions: { height: 14, length: 57, width: 78 },
+    basePrice: 750,
+  },
+  queen: {
+    label: "Queen",
+    dimensions: { height: 14, length: 63, width: 83 },
+    basePrice: 900,
+  },
+  king: {
+    label: "King",
+    dimensions: { height: 14, length: 79, width: 83 },
+    basePrice: 900,
+  },
+  calKing: {
+    label: "Cal King",
+    dimensions: { height: 14, length: 76, width: 87 },
+    basePrice: 950,
+  },
+} as const;
+
+const ADD_ONS = {
+  shelves: {
+    label: "2 Shelves Included",
+    price: 100,
+  },
+  drawers: {
+    label: "Under-bed Drawers",
+    price: 150,
+  },
+  headboard: {
+    label: "Headboard (48 inch)",
+    price: 200,
+  },
+  customHeight: {
+    label: "Custom Height Adjustment",
+    price: 50,
+  },
+} as const;
 
 export function FurnitureCalculator() {
   const [searchParams] = useSearchParams();
@@ -44,12 +99,19 @@ export function FurnitureCalculator() {
     drawers: 3,
     wardrobeHeight: "6",
     customHeight: 8,
+    bedSize: "queen",
+    bedAddOns: {
+      shelves: false,
+      drawers: false,
+      headboard: false,
+      customHeight: false,
+    },
   });
 
   // Pre-select furniture type from URL params
   useEffect(() => {
     const type = searchParams.get("type");
-    if (type && ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet"].includes(type)) {
+    if (type && ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet", "platform-bed"].includes(type)) {
       setState((prev) => ({
         ...prev,
         furnitureType: type as FurnitureType,
@@ -107,6 +169,34 @@ export function FurnitureCalculator() {
           `${state.length} ft × ${PRICES.staircaseCabinetPerFoot} = ${staircaseCost.toLocaleString()}`,
         ];
         break;
+
+      case "platform-bed":
+        const bedConfig = BED_CONFIG[state.bedSize];
+        let bedTotal = bedConfig.basePrice;
+        breakdown = [
+          `${bedConfig.label} Platform Bed = $${bedConfig.basePrice.toLocaleString()}`,
+        ];
+
+        // Add-ons
+        if (state.bedAddOns.shelves) {
+          bedTotal += ADD_ONS.shelves.price;
+          breakdown.push(`${ADD_ONS.shelves.label} = $${ADD_ONS.shelves.price}`);
+        }
+        if (state.bedAddOns.drawers) {
+          bedTotal += ADD_ONS.drawers.price;
+          breakdown.push(`${ADD_ONS.drawers.label} = $${ADD_ONS.drawers.price}`);
+        }
+        if (state.bedAddOns.headboard) {
+          bedTotal += ADD_ONS.headboard.price;
+          breakdown.push(`${ADD_ONS.headboard.label} = $${ADD_ONS.headboard.price}`);
+        }
+        if (state.bedAddOns.customHeight) {
+          bedTotal += ADD_ONS.customHeight.price;
+          breakdown.push(`${ADD_ONS.customHeight.label} = $${ADD_ONS.customHeight.price}`);
+        }
+
+        total = bedTotal;
+        break;
     }
 
     return { total, breakdown };
@@ -122,6 +212,8 @@ export function FurnitureCalculator() {
         return "Wardrobe";
       case "staircase-cabinet":
         return "Staircase Cabinet";
+      case "platform-bed":
+        return "Platform Bed";
     }
   };
 
@@ -147,10 +239,10 @@ export function FurnitureCalculator() {
                   furnitureType: value as FurnitureType,
                 }))
               }
-              className="grid grid-cols-1 sm:grid-cols-3 gap-3"
+              className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-3"
             >
               {(
-                ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet"] as FurnitureType[]
+                ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet", "platform-bed"] as FurnitureType[]
               ).map((type) => (
                 <div key={type} className="relative">
                   <RadioGroupItem
@@ -166,23 +258,23 @@ export function FurnitureCalculator() {
                       {getFurnitureLabel(type)}
                     </span>
                     <span className="text-xs text-muted-foreground mt-1">
-                      $
-                      {type === "base-cabinet"
-                        ? PRICES.baseCabinetPerFoot
-                        : type === "top-cabinet"
-                          ? PRICES.topCabinetPerFoot
-                          : type === "wardrobe"
-                            ? PRICES.wardrobePerFoot
-                            : PRICES.staircaseCabinetPerFoot}
-                      /ft
+                      {type === "platform-bed"
+                        ? "From $750"
+                        : `$${type === "base-cabinet"
+                          ? PRICES.baseCabinetPerFoot
+                          : type === "top-cabinet"
+                            ? PRICES.topCabinetPerFoot
+                            : type === "wardrobe"
+                              ? PRICES.wardrobePerFoot
+                              : PRICES.staircaseCabinetPerFoot}/ft`}
                     </span>
                     <img
                       src={
                         type === "base-cabinet"
                           ? baseCabinet
                           : type === "top-cabinet"
-                            ? topCabinet 
-                            : type === "wardrobe" 
+                            ? topCabinet
+                            : type === "wardrobe"
                               ? wardrobeImg
                               : stairsImg
                       }
@@ -197,34 +289,36 @@ export function FurnitureCalculator() {
 
           <Separator />
 
-          {/* Length */}
-          <div className="space-y-3">
-            <Label htmlFor="length" className="text-base font-semibold">
-              Length (Linear Feet)
-            </Label>
-            <div className="flex items-center gap-4">
-              <Input
-                id="length"
-                type="number"
-                min={state.furnitureType === "staircase-cabinet" ? 3 : 1}
-                max={state.furnitureType === "staircase-cabinet" ? 12 : 100}
-                value={state.length}
-                onChange={(e) =>
-                  setState((s) => ({
-                    ...s,
-                    length: Math.max(
-                      state.furnitureType === "staircase-cabinet" ? 3 : 1,
-                      parseInt(e.target.value) || (state.furnitureType === "staircase-cabinet" ? 3 : 1)
-                    ),
-                  }))
-                }
-                className="w-24 text-lg font-semibold"
-              />
-              <span className="text-muted-foreground">feet</span>
+          {/* Length - Hidden for Platform Bed */}
+          {state.furnitureType !== "platform-bed" && (
+            <div className="space-y-3">
+              <Label htmlFor="length" className="text-base font-semibold">
+                Length (Linear Feet)
+              </Label>
+              <div className="flex items-center gap-4">
+                <Input
+                  id="length"
+                  type="number"
+                  min={state.furnitureType === "staircase-cabinet" ? 3 : 1}
+                  max={state.furnitureType === "staircase-cabinet" ? 12 : 100}
+                  value={state.length}
+                  onChange={(e) =>
+                    setState((s) => ({
+                      ...s,
+                      length: Math.max(
+                        state.furnitureType === "staircase-cabinet" ? 3 : 1,
+                        parseInt(e.target.value) || (state.furnitureType === "staircase-cabinet" ? 3 : 1)
+                      ),
+                    }))
+                  }
+                  className="w-24 text-lg font-semibold"
+                />
+                <span className="text-muted-foreground">feet</span>
+              </div>
             </div>
-          </div>
+          )}
 
-          <Separator />
+          {state.furnitureType !== "platform-bed" && <Separator />}
 
           {/* Material */}
           <div className="space-y-3">
@@ -348,6 +442,83 @@ export function FurnitureCalculator() {
                     <span className="text-muted-foreground">feet</span>
                   </div>
                 )}
+              </div>
+            </>
+          )}
+
+          {/* Conditional: Platform Bed Configuration */}
+          {state.furnitureType === "platform-bed" && (
+            <>
+              <Separator />
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Bed Size</Label>
+                <RadioGroup
+                  value={state.bedSize}
+                  onValueChange={(value) =>
+                    setState((s) => ({
+                      ...s,
+                      bedSize: value as BedSize,
+                    }))
+                  }
+                  className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                >
+                  {(Object.keys(BED_CONFIG) as BedSize[]).map((size) => (
+                    <div key={size}>
+                      <RadioGroupItem
+                        value={size}
+                        id={`bed-${size}`}
+                        className="peer sr-only"
+                      />
+                      <Label
+                        htmlFor={`bed-${size}`}
+                        className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer transition-colors"
+                      >
+                        <span className="font-medium">
+                          {BED_CONFIG[size].label}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          ${BED_CONFIG[size].basePrice}
+                        </span>
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <Separator />
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Add-Ons</Label>
+                <div className="space-y-2">
+                  {(Object.keys(ADD_ONS) as Array<keyof typeof ADD_ONS>).map((addon) => (
+                    <label
+                      key={addon}
+                      className="flex items-center justify-between p-3 rounded-lg border-2 border-muted hover:bg-accent hover:text-white cursor-pointer transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={state.bedAddOns[addon]}
+                          onChange={(e) =>
+                            setState((s) => ({
+                              ...s,
+                              bedAddOns: {
+                                ...s.bedAddOns,
+                                [addon]: e.target.checked,
+                              },
+                            }))
+                          }
+                          className="h-4 w-4"
+                        />
+                        <span className="text-sm font-medium">
+                          {ADD_ONS[addon].label}
+                        </span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        +${ADD_ONS[addon].price}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </>
           )}
