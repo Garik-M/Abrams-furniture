@@ -12,6 +12,7 @@ import baseCabinet from "@/assets/images/archive.png";
 import topCabinet from "@/assets/images/topCabinet.png";
 import wardrobeImg from "@/assets/images/wardrobe.png";
 import stairsImg from "@/assets/svg/stairs.svg";
+import bedSvg from "@/assets/images/bedSvg.png";
 
 type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet" | "platform-bed";
 type Material = "melamine" | "plywood";
@@ -131,15 +132,15 @@ export function FurnitureCalculator() {
         const drawerCost = state.drawers * PRICES.drawerCost;
         total = baseCost + drawerCost;
         breakdown = [
-          `${state.length} ft × $${PRICES.baseCabinetPerFoot} = $${baseCost.toLocaleString()}`,
-          `${state.drawers} drawers × $${PRICES.drawerCost} = $${drawerCost.toLocaleString()}`,
+          `${state.length} ft × $${PRICES.baseCabinetPerFoot} ≈ $${baseCost.toLocaleString()}`,
+          `${state.drawers} drawers × $${PRICES.drawerCost} ≈ $${drawerCost.toLocaleString()}`,
         ];
         break;
 
       case "top-cabinet":
         total = state.length * PRICES.topCabinetPerFoot;
         breakdown = [
-          `${state.length} ft × $${PRICES.topCabinetPerFoot} = $${total.toLocaleString()}`,
+          `${state.length} ft × $${PRICES.topCabinetPerFoot} ≈ $${total.toLocaleString()}`,
         ];
         break;
 
@@ -158,7 +159,7 @@ export function FurnitureCalculator() {
         total = state.length * PRICES.wardrobePerFoot * heightFactor;
         breakdown = [
           `${state.length} ft × $${PRICES.wardrobePerFoot} × ${heightFactor}x (${heightValue}ft height)`,
-          `= $${total.toLocaleString()}`,
+          `≈ $${total.toLocaleString()}`,
         ];
         break;
 
@@ -166,7 +167,7 @@ export function FurnitureCalculator() {
         const staircaseCost = state.length * PRICES.staircaseCabinetPerFoot;
         total = staircaseCost;
         breakdown = [
-          `${state.length} ft × ${PRICES.staircaseCabinetPerFoot} = ${staircaseCost.toLocaleString()}`,
+          `${state.length} ft × ${PRICES.staircaseCabinetPerFoot} ≈ ${staircaseCost.toLocaleString()}`,
         ];
         break;
 
@@ -174,25 +175,25 @@ export function FurnitureCalculator() {
         const bedConfig = BED_CONFIG[state.bedSize];
         let bedTotal = bedConfig.basePrice;
         breakdown = [
-          `${bedConfig.label} Platform Bed = $${bedConfig.basePrice.toLocaleString()}`,
+          `${bedConfig.label} Platform Bed ≈ $${bedConfig.basePrice.toLocaleString()}`,
         ];
 
         // Add-ons
         if (state.bedAddOns.shelves) {
           bedTotal += ADD_ONS.shelves.price;
-          breakdown.push(`${ADD_ONS.shelves.label} = $${ADD_ONS.shelves.price}`);
+          breakdown.push(`${ADD_ONS.shelves.label} ≈ $${ADD_ONS.shelves.price}`);
         }
         if (state.bedAddOns.drawers) {
           bedTotal += ADD_ONS.drawers.price;
-          breakdown.push(`${ADD_ONS.drawers.label} = $${ADD_ONS.drawers.price}`);
+          breakdown.push(`${ADD_ONS.drawers.label} ≈ $${ADD_ONS.drawers.price}`);
         }
         if (state.bedAddOns.headboard) {
           bedTotal += ADD_ONS.headboard.price;
-          breakdown.push(`${ADD_ONS.headboard.label} = $${ADD_ONS.headboard.price}`);
+          breakdown.push(`${ADD_ONS.headboard.label} ≈ $${ADD_ONS.headboard.price}`);
         }
         if (state.bedAddOns.customHeight) {
           bedTotal += ADD_ONS.customHeight.price;
-          breakdown.push(`${ADD_ONS.customHeight.label} = $${ADD_ONS.customHeight.price}`);
+          breakdown.push(`${ADD_ONS.customHeight.label} ≈ $${ADD_ONS.customHeight.price}`);
         }
 
         total = bedTotal;
@@ -276,7 +277,8 @@ export function FurnitureCalculator() {
                             ? topCabinet
                             : type === "wardrobe"
                               ? wardrobeImg
-                              : stairsImg
+                              : type === "staircase-cabinet"
+                                ? stairsImg : bedSvg
                       }
                       alt="furniture"
                       className="w-10 absolute right-[20px] lg:hidden"
@@ -320,32 +322,14 @@ export function FurnitureCalculator() {
 
           {state.furnitureType !== "platform-bed" && <Separator />}
 
-          {/* Material */}
+          {/* Color Palettes */}
           <div className="space-y-3">
-            <Label className="text-base font-semibold">Material</Label>
-            <RadioGroup
-              value={state.material}
-              onValueChange={(value) =>
-                setState((s) => ({ ...s, material: value as Material }))
-              }
-              className="grid grid-cols-2 gap-3"
-            >
-              {(["melamine", "plywood"] as Material[]).map((mat) => (
-                <div key={mat}>
-                  <RadioGroupItem
-                    value={mat}
-                    id={mat}
-                    className="peer sr-only"
-                  />
-                  <Label
-                    htmlFor={mat}
-                    className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer transition-colors"
-                  >
-                    <span className="font-medium capitalize">{mat}</span>
-                  </Label>
-                </div>
-              ))}
-            </RadioGroup>
+            <Label className="text-base font-semibold">Material & Colors</Label>
+            <Button asChild variant="outline" className="w-full">
+              <a href="https://panellis.com/" target="_blank" rel="noopener noreferrer">
+                Review Color Palettes
+              </a>
+            </Button>
           </div>
 
           {/* Conditional: Drawers for Base Cabinet */}
@@ -538,7 +522,9 @@ export function FurnitureCalculator() {
                     ? topCabinet
                     : state.furnitureType === "wardrobe"
                       ? wardrobeImg
-                      : stairsImg
+                      : state.furnitureType === "platform-bed"
+                        ? bedSvg
+                        : stairsImg
               }
               alt="furniture"
               className="w-20 absolute right-[30px] max-lg:hidden"
@@ -551,7 +537,7 @@ export function FurnitureCalculator() {
                 Total Estimated Price
               </p>
               <p className="text-5xl font-bold text-primary">
-                ${calculation.total.toLocaleString()}
+                ≈${calculation.total.toLocaleString()}
               </p>
             </div>
 
