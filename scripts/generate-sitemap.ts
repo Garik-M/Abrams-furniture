@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const DOMAIN = "https://abrams-furniture.vercel.app";
+const DOMAIN = "https://abramsfurniture.com";
 
 const routes = [
   { path: "/", priority: 1.0, changefreq: "weekly" },

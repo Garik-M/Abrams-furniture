@@ -47,7 +47,7 @@ const furnitureTypes = [
     id: "platform-bed",
     title: "Platform Bed",
     description: "Custom platform beds with storage options and headboards",
-    price: "From $750",
+    price: "From $950",
     features: ["Multiple sizes", "Storage drawers", "Custom headboard"],
     img: bedImg, // You can replace with a bed image later
   },

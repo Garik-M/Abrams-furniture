@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://abrams-furniture.vercel.app/</loc>
+    <loc>https://abramsfurniture.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
-    <loc>https://abrams-furniture.vercel.app/calculator</loc>
+    <loc>https://abramsfurniture.com/calculator</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abrams-furniture.vercel.app/how-it-works</loc>
+    <loc>https://abramsfurniture.com/how-it-works</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://abrams-furniture.vercel.app/materials</loc>
+    <loc>https://abramsfurniture.com/materials</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://abrams-furniture.vercel.app/contact</loc>
+    <loc>https://abramsfurniture.com/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -1,74 +1,94 @@
-# Welcome to your Lovable project
+# Abrams Furniture
 
-## Project info
+Custom Furniture Manufacturing - Built to Order
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Project Overview
 
-## How can I edit this code?
+This is a custom furniture e-commerce platform featuring:
+- Interactive price calculator for cabinets, wardrobes, and platform beds
+- Real-time pricing with customization options
+- Contact form with Telegram integration
+- Responsive design with modern UI components
 
-There are several ways of editing your application.
+## Technologies Used
 
-**Use Lovable**
+- **Vite** - Fast build tool and development server
+- **TypeScript** - Type-safe JavaScript
+- **React** - UI library
+- **React Router** - Client-side routing
+- **shadcn/ui** - Component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v18 or higher)
+- npm or yarn
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to the project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build in development mode
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run test` - Run tests
+- `npm run sitemap` - Generate sitemap
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/       # Reusable UI components
+│   ├── calculator/  # Calculator-specific components
+│   ├── home/        # Homepage components
+│   ├── layout/      # Layout components (Header, Footer)
+│   └── ui/          # shadcn/ui components
+├── pages/           # Page components
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions
+└── assets/          # Images and static assets
+```
 
-This project is built with:
+## Features
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Price Calculator**: Interactive calculator for furniture pricing
+- **Multiple Product Types**: Base cabinets, top cabinets, wardrobes, staircase cabinets, platform beds
+- **Customization Options**: Sizes, heights, drawers, add-ons
+- **Contact Form**: Direct inquiry submission via Telegram
+- **Responsive Design**: Mobile-first approach
+- **SEO Optimized**: Sitemap generation and meta tags
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Build the project for production:
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+npm run build
+```
 
-Yes, you can!
+The built files will be in the `dist/` directory, ready to be deployed to any static hosting service.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
-# Abrams-furniture
+Private - All rights reserved

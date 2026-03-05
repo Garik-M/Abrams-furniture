@@ -47,27 +47,27 @@ const BED_CONFIG = {
   twin: {
     label: "Twin",
     dimensions: { height: 14, length: 42, width: 78 },
-    basePrice: 750,
+    basePrice: 950,
   },
   full: {
     label: "Full",
     dimensions: { height: 14, length: 57, width: 78 },
-    basePrice: 750,
+    basePrice: 950,
   },
   queen: {
     label: "Queen",
     dimensions: { height: 14, length: 63, width: 83 },
-    basePrice: 900,
+    basePrice: 1100,
   },
   king: {
     label: "King",
     dimensions: { height: 14, length: 79, width: 83 },
-    basePrice: 900,
+    basePrice: 1100,
   },
   calKing: {
     label: "Cal King",
     dimensions: { height: 14, length: 76, width: 87 },
-    basePrice: 950,
+    basePrice: 1150,
   },
 } as const;
 
@@ -260,7 +260,7 @@ export function FurnitureCalculator() {
                     </span>
                     <span className="text-xs text-muted-foreground mt-1">
                       {type === "platform-bed"
-                        ? "From $750"
+                        ? "From $950"
                         : `$${type === "base-cabinet"
                           ? PRICES.baseCabinetPerFoot
                           : type === "top-cabinet"
