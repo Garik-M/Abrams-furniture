@@ -1,1 +1,8 @@
+# Serve static assets directly
+/favicon.ico   /favicon.ico   200
+/favicon.png   /favicon.png   200
+/robots.txt    /robots.txt    200
+/sitemap.xml   /sitemap.xml   200
+
+# SPA fallback
 /*    /index.html   200
