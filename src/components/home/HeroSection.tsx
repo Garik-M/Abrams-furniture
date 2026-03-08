@@ -17,27 +17,27 @@ export function HeroSection() {
       <div className="container relative z-10">
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
-          <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-1.5 text-sm mb-8 text-white">
+          <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-1.5 text-sm mb-5 text-white">
             <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2" />
             Factory Direct • USA Made
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl mb-6 text-balance text-white">
+          <h1 className="max-[350px]:text-2xl max-[400px]:text-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl mb-6 text-balance text-white">
             Build Your Custom Furniture.{" "}
             <span className="text-primary text-white">Get Instant Pricing.</span> Delivered
             in 15 Days.
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
+          <p className="max-[400px]:text-sm text-lg text-white max-w-2xl mx-auto mb-5">
             Design cabinets and wardrobes exactly how you want them. Our
             transparent calculator shows you the price instantly—no hidden fees,
             no waiting for quotes.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Button asChild size="lg" className="text-lg px-8">
               <Link to="/calculator">
                 <Calculator className="mr-2 h-5 w-5" />
