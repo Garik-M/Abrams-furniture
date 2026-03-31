@@ -14,7 +14,12 @@ import wardrobeImg from "@/assets/images/wardrobe.png";
 import stairsImg from "@/assets/svg/stairs.svg";
 import bedSvg from "@/assets/images/bedSvg.png";
 
-type FurnitureType = "base-cabinet" | "top-cabinet" | "wardrobe" | "staircase-cabinet" | "platform-bed";
+type FurnitureType =
+  | "base-cabinet"
+  | "top-cabinet"
+  | "wardrobe"
+  | "staircase-cabinet"
+  | "platform-bed";
 type Material = "melamine" | "plywood";
 type WardrobeHeight = "6" | "9" | "custom";
 type BedSize = "twin" | "full" | "queen" | "king" | "calKing";
@@ -93,6 +98,8 @@ const ADD_ONS = {
 export function FurnitureCalculator() {
   const [searchParams] = useSearchParams();
 
+  const [lengthInput, setLengthInput] = useState<string>("10");
+
   const [state, setState] = useState<CalculatorState>({
     furnitureType: "base-cabinet",
     length: 10,
@@ -112,13 +119,23 @@ export function FurnitureCalculator() {
   // Pre-select furniture type from URL params
   useEffect(() => {
     const type = searchParams.get("type");
-    if (type && ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet", "platform-bed"].includes(type)) {
+    if (
+      type &&
+      [
+        "base-cabinet",
+        "top-cabinet",
+        "wardrobe",
+        "staircase-cabinet",
+        "platform-bed",
+      ].includes(type)
+    ) {
+      const newLength = type === "staircase-cabinet" ? 3 : state.length;
       setState((prev) => ({
         ...prev,
         furnitureType: type as FurnitureType,
-        // Reset length to appropriate default for staircase cabinet
-        length: type === "staircase-cabinet" ? 3 : prev.length,
+        length: newLength,
       }));
+      setLengthInput(String(newLength));
     }
   }, [searchParams]);
 
@@ -181,19 +198,27 @@ export function FurnitureCalculator() {
         // Add-ons
         if (state.bedAddOns.shelves) {
           bedTotal += ADD_ONS.shelves.price;
-          breakdown.push(`${ADD_ONS.shelves.label} ≈ $${ADD_ONS.shelves.price}`);
+          breakdown.push(
+            `${ADD_ONS.shelves.label} ≈ $${ADD_ONS.shelves.price}`,
+          );
         }
         if (state.bedAddOns.drawers) {
           bedTotal += ADD_ONS.drawers.price;
-          breakdown.push(`${ADD_ONS.drawers.label} ≈ $${ADD_ONS.drawers.price}`);
+          breakdown.push(
+            `${ADD_ONS.drawers.label} ≈ $${ADD_ONS.drawers.price}`,
+          );
         }
         if (state.bedAddOns.headboard) {
           bedTotal += ADD_ONS.headboard.price;
-          breakdown.push(`${ADD_ONS.headboard.label} ≈ $${ADD_ONS.headboard.price}`);
+          breakdown.push(
+            `${ADD_ONS.headboard.label} ≈ $${ADD_ONS.headboard.price}`,
+          );
         }
         if (state.bedAddOns.customHeight) {
           bedTotal += ADD_ONS.customHeight.price;
-          breakdown.push(`${ADD_ONS.customHeight.label} ≈ $${ADD_ONS.customHeight.price}`);
+          breakdown.push(
+            `${ADD_ONS.customHeight.label} ≈ $${ADD_ONS.customHeight.price}`,
+          );
         }
 
         total = bedTotal;
@@ -243,7 +268,13 @@ export function FurnitureCalculator() {
               className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-3"
             >
               {(
-                ["base-cabinet", "top-cabinet", "wardrobe", "staircase-cabinet", "platform-bed"] as FurnitureType[]
+                [
+                  "base-cabinet",
+                  "top-cabinet",
+                  "wardrobe",
+                  "staircase-cabinet",
+                  "platform-bed",
+                ] as FurnitureType[]
               ).map((type) => (
                 <div key={type} className="relative">
                   <RadioGroupItem
@@ -261,13 +292,15 @@ export function FurnitureCalculator() {
                     <span className="text-xs text-muted-foreground mt-1">
                       {type === "platform-bed"
                         ? "From $950"
-                        : `$${type === "base-cabinet"
-                          ? PRICES.baseCabinetPerFoot
-                          : type === "top-cabinet"
-                            ? PRICES.topCabinetPerFoot
-                            : type === "wardrobe"
-                              ? PRICES.wardrobePerFoot
-                              : PRICES.staircaseCabinetPerFoot}/ft`}
+                        : `$${
+                            type === "base-cabinet"
+                              ? PRICES.baseCabinetPerFoot
+                              : type === "top-cabinet"
+                                ? PRICES.topCabinetPerFoot
+                                : type === "wardrobe"
+                                  ? PRICES.wardrobePerFoot
+                                  : PRICES.staircaseCabinetPerFoot
+                          }/ft`}
                     </span>
                     <img
                       src={
@@ -278,7 +311,8 @@ export function FurnitureCalculator() {
                             : type === "wardrobe"
                               ? wardrobeImg
                               : type === "staircase-cabinet"
-                                ? stairsImg : bedSvg
+                                ? stairsImg
+                                : bedSvg
                       }
                       alt="furniture"
                       className="w-10 absolute right-[20px] lg:hidden"
@@ -303,16 +337,16 @@ export function FurnitureCalculator() {
                   type="number"
                   min={state.furnitureType === "staircase-cabinet" ? 3 : 1}
                   max={state.furnitureType === "staircase-cabinet" ? 12 : 100}
-                  value={state.length}
-                  onChange={(e) =>
-                    setState((s) => ({
-                      ...s,
-                      length: Math.max(
-                        state.furnitureType === "staircase-cabinet" ? 3 : 1,
-                        parseInt(e.target.value) || (state.furnitureType === "staircase-cabinet" ? 3 : 1)
-                      ),
-                    }))
-                  }
+                  value={lengthInput}
+                  onChange={(e) => setLengthInput(e.target.value)}
+                  onBlur={() => {
+                    const min =
+                      state.furnitureType === "staircase-cabinet" ? 3 : 1;
+                    const parsed = parseInt(lengthInput);
+                    const clamped = isNaN(parsed) ? min : Math.max(min, parsed);
+                    setLengthInput(String(clamped));
+                    setState((s) => ({ ...s, length: clamped }));
+                  }}
                   className="w-24 text-lg font-semibold"
                 />
                 <span className="text-muted-foreground">feet</span>
@@ -326,7 +360,11 @@ export function FurnitureCalculator() {
           <div className="space-y-3">
             <Label className="text-base font-semibold">Material & Colors</Label>
             <Button asChild variant="outline" className="w-full">
-              <a href="https://panellis.com/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://panellis.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Review Color Palettes
               </a>
             </Button>
@@ -473,35 +511,37 @@ export function FurnitureCalculator() {
               <div className="space-y-3">
                 <Label className="text-base font-semibold">Add-Ons</Label>
                 <div className="space-y-2">
-                  {(Object.keys(ADD_ONS) as Array<keyof typeof ADD_ONS>).map((addon) => (
-                    <label
-                      key={addon}
-                      className="flex items-center justify-between p-3 rounded-lg border-2 border-muted hover:bg-accent hover:text-white cursor-pointer transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <input
-                          type="checkbox"
-                          checked={state.bedAddOns[addon]}
-                          onChange={(e) =>
-                            setState((s) => ({
-                              ...s,
-                              bedAddOns: {
-                                ...s.bedAddOns,
-                                [addon]: e.target.checked,
-                              },
-                            }))
-                          }
-                          className="h-4 w-4"
-                        />
-                        <span className="text-sm font-medium">
-                          {ADD_ONS[addon].label}
+                  {(Object.keys(ADD_ONS) as Array<keyof typeof ADD_ONS>).map(
+                    (addon) => (
+                      <label
+                        key={addon}
+                        className="flex items-center justify-between p-3 rounded-lg border-2 border-muted hover:bg-accent hover:text-white cursor-pointer transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={state.bedAddOns[addon]}
+                            onChange={(e) =>
+                              setState((s) => ({
+                                ...s,
+                                bedAddOns: {
+                                  ...s.bedAddOns,
+                                  [addon]: e.target.checked,
+                                },
+                              }))
+                            }
+                            className="h-4 w-4"
+                          />
+                          <span className="text-sm font-medium">
+                            {ADD_ONS[addon].label}
+                          </span>
+                        </div>
+                        <span className="text-sm text-muted-foreground">
+                          +${ADD_ONS[addon].price}
                         </span>
-                      </div>
-                      <span className="text-sm text-muted-foreground">
-                        +${ADD_ONS[addon].price}
-                      </span>
-                    </label>
-                  ))}
+                      </label>
+                    ),
+                  )}
                 </div>
               </div>
             </>

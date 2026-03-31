@@ -10,6 +10,10 @@ import img5 from "@/assets/images/20221201_005004.webp";
 import img6 from "@/assets/images/20221201_005126.webp";
 import img7 from "@/assets/images/IMG_0560.webp";
 import img8 from "@/assets/images/received_318287899094124.webp";
+import img9 from "@/assets/images/newImg.webp";
+import img10 from "@/assets/images/newImg2.webp";
+import img11 from "@/assets/images/newImg3.webp";
+import img12 from "@/assets/images/newImg4.webp";
 
 const galleryImages = [
   {
@@ -59,6 +63,30 @@ const galleryImages = [
     src: img8,
     title: "Completed Project",
     description: "Completed custom furniture project for client",
+  },
+  {
+    id: 9,
+    src: img9,
+    title: "Custom Furniture",
+    description: "Custom furniture crafted with precision and care",
+  },
+  {
+    id: 10,
+    src: img10,
+    title: "Custom Furniture",
+    description: "Custom furniture crafted with precision and care",
+  },
+  {
+    id: 11,
+    src: img11,
+    title: "Custom Furniture",
+    description: "Custom furniture crafted with precision and care",
+  },
+  {
+    id: 12,
+    src: img12,
+    title: "Custom Furniture",
+    description: "Custom furniture crafted with precision and care",
   },
 ];
 
