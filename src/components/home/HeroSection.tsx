@@ -5,7 +5,7 @@ import heroBackground from "@/assets/images/hero-bg.webp";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-32 h-[calc(100vh-60px)]">
+    <section className="relative overflow-hidden py-20 lg:py-32 min-h-[calc(100vh-60px)]">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -25,8 +25,10 @@ export function HeroSection() {
           {/* Headline */}
           <h1 className="max-[350px]:text-2xl max-[400px]:text-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl mb-6 text-balance text-white">
             Build Your Custom Furniture.{" "}
-            <span className="text-primary text-white">Get Instant Pricing.</span> Delivered
-            in 15 Days.
+            <span className="text-primary text-white">
+              Get Instant Pricing.
+            </span>{" "}
+            Delivered in 15 Days.
           </h1>
 
           {/* Subheadline */}
